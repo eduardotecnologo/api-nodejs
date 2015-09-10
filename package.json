@@ -1,0 +1,20 @@
+{
+  "name": "fastorder-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "good": "^6.3.0",
+    "good-console": "^5.0.3",
+    "hapi": "^9.3.1",
+    "hapi-json-view": "^3.0.0",
+    "joi": "^6.6.1",
+    "mongoose": "^4.1.6",
+    "vision": "^3.0.0"
+  }
+}
