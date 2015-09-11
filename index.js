@@ -1,34 +1,24 @@
+// frameworks packages
 var Hapi = require('hapi');
 var Good = require('good');
 
+// configurations app
+var viewsConfig = require('./config/view');
+var consoleConfig = require('./config/console');
+mongoose = require('./config/database'); 
 // server
 var server = new Hapi.Server();
 server.connection({ port: 3000 });
+server.log(['error', 'database', 'read']);
 
-// routes require
-var products = require('./routes/products');
+//registers
+viewsConfig(server,function(server){
+    // routes
+    server.route(require('./routes/products'));
+    server.route(require('./routes/categories'));
+});
 
-
-// routes 
-
-server.route(products);
-
-server.register({
-    register: Good,
-    options: {
-        reporters: [{
-            reporter: require('good-console'),
-            events: {
-                response: '*',
-                log: '*'
-            }
-        }]
-    }
-}, function (err) {
-    if (err) {
-        throw err; // something bad happened loading the plugin
-    }
-
+consoleConfig(Good, server,function(server){
     server.start(function () {
         server.log('info', 'Server running at: ' + server.info.uri);
     });
