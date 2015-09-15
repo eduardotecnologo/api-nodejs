@@ -1,25 +1,29 @@
-// frameworks packages
-var Hapi = require('hapi');
-var Good = require('good');
+var express = require('express');
+var bodyParser = require('body-parser');
+var expressJoi = require('express-joi');
+var multer  = require('multer')
 
-// configurations app
-var viewsConfig = require('./config/view');
-var consoleConfig = require('./config/console');
-mongoose = require('./config/database'); 
-// server
-var server = new Hapi.Server();
-server.connection({ port: 3000 });
-server.log(['error', 'database', 'read']);
+//var upload = multer({ dest: 'uploads/' });
+var Joi = expressJoi.Joi; // The exposed Joi object used to create schemas and custom types
+var app = express();
 
-//registers
-viewsConfig(server,function(server){
-    // routes
-    server.route(require('./routes/products'));
-    server.route(require('./routes/categories'));
+app.use(multer());
+app.use(express.methodOverride());
+app.use(express.bodyParser());
+app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/app/views');
+
+
+app.get('/', function (req, res) {
+  res.send('Hello World!');
 });
 
-consoleConfig(Good, server,function(server){
-    server.start(function () {
-        server.log('info', 'Server running at: ' + server.info.uri);
-    });
+app.use('/api/products',require('./app/routes/products'));
+
+var server = app.listen(3000, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+
+  console.log('Example app listening at http://%s:%s', host, port);
 });

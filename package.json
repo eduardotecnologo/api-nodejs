@@ -9,12 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "good": "^6.3.0",
-    "good-console": "^5.0.3",
-    "hapi": "^9.3.1",
-    "hapi-json-view": "^3.0.0",
+    "body-parser": "^1.13.3",
+    "cloudinary": "^1.2.4",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "express-joi": "^0.3.1",
     "joi": "^6.6.1",
     "mongoose": "^4.1.6",
-    "vision": "^3.0.0"
+    "multer": "^1.0.3"
   }
 }
