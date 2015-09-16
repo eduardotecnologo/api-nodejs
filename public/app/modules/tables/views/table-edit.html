@@ -1,0 +1,19 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Editando Mesa - {{form.name}}</h3>
+  </div>
+  <form name="tableForm" ng-submit="save(tableForm)" novalidate>
+    <div class="box-body">
+
+      <div ng-class="{'form-group has-error' : isinvalidField(tableForm,'name'), 'form-group' : !isinvalidField(tableForm,'name') }">
+        <label class="control-label">Nome</label>
+        <input type="text" name="name" ng-model="form.name" class="form-control"  placeholder="Nome da mesa" required>
+      </div>  
+
+      </div><!-- /.box-body -->
+      <div class="box-footer">
+        <a href="#/mesas" class="btn btn-danger btn-sm">Cancelar</a>
+        <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
+      </div>
+    </form>
+</div><!-- /.box -->

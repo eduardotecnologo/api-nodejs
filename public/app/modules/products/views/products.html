@@ -1,0 +1,42 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Produtos</h3>
+    <a href="#/produtos/novo" class="btn btn-sm pull-right btn-primary">Adicionar Novo</a>
+  </div>
+  <div class="box-body">
+    <table class="table table-condensed table-striped table-bordered">
+      <thead>
+        <tr>
+          <td>Id</td>
+          <td>Nome</td>
+          <td>Preço</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-if="!products.length">
+          <td colspan="3">Nenhum produto cadastrado.</td>
+        </tr>
+        <tr ng-repeat="product in products">
+          <td ng-bind="product.id"></td>
+          <td ng-bind="product.name"></td>
+          <td>
+            <money-br val="product.price" />
+          </td>
+          <td>
+            <a ng-href="#/produtos/{{product.id}}/editar">Editar</a>
+            <a href="javascript:void(0);" ng-click="remove(product.id)">Deletar</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    <div paging
+    page="1" 
+    page-size="25" 
+    total="total"
+    paging-action="paging(page, pageSize, total,'/api/products')">
+  </div> 
+</div><!-- /.box-footer-->
+</div><!-- /.box -->

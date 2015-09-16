@@ -1,0 +1,19 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Novo Cardápio</h3>
+  </div>
+  <form name="menuForm" ng-submit="save(menuForm)" novalidate>
+    <div class="box-body">
+
+      <div ng-class="{'form-group has-error' : isinvalidField(menuForm,'name'), 'form-group' : !isinvalidField(menuForm,'name') }">
+        <label class="control-label">Nome</label>
+        <input type="text" name="name" ng-model="form.name" class="form-control"  placeholder="Nome do cardapio" required>
+      </div>  
+
+      </div><!-- /.box-body -->
+      <div class="box-footer">
+        <a href="#/cardapios" class="btn btn-danger btn-sm">Cancelar</a>
+        <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
+      </div>
+    </form>
+</div><!-- /.box -->

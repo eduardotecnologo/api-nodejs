@@ -1,0 +1,37 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Mesas</h3>
+    <a href="#/mesas/novo" class="btn btn-sm pull-right btn-primary">Adicionar Novo</a>
+  </div>
+  <div class="box-body">
+    <table class="table table-condensed table-striped table-bordered">
+      <thead>
+        <tr>
+          <td>Nome</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-if="!tables.length">
+          <td colspan="3">Nenhum mesas cadastrado.</td>
+        </tr>
+        <tr ng-repeat="table in tables">
+          <td ng-bind="table.name"></td>
+          <td>
+            <a ng-href="#/mesas/{{table.id}}/editar">Editar</a>
+            <a ng-href="/api/qr-code/?name={{table.name}}">Gerar Qr Code</a>
+            <a href="javascript:void(0);" ng-click="remove(table.id)">Deletar</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    <div paging
+    page="1" 
+    page-size="25" 
+    total="total"
+    paging-action="paging(page, pageSize, total,'/api/tables')">
+  </div> 
+</div><!-- /.box-footer-->
+</div><!-- /.box -->

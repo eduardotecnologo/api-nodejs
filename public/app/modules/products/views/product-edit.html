@@ -1,0 +1,121 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Editando Produto - {{form.name}}</h3>
+  </div>
+  <form name="productForm" ng-submit="save(productForm)" novalidate>
+    <div class="box-body">
+
+      <div ng-class="{'form-group has-error' : isinvalidField(productForm,'name'), 'form-group' : !isinvalidField(productForm,'name') }">
+        <label class="control-label">Nome</label>
+        <input type="text" name="name" ng-model="form.name" class="form-control"  placeholder="Nome do produto" required>
+      </div>
+
+      <div ng-class="{'form-group has-error' : isinvalidField(productForm,'menu'), 'form-group' : !isinvalidField(productForm,'menu') }">
+        <label class="control-label">Cardápio</label>
+        <select ng-options="menu.id as menu.name for menu in menus" class="form-control" name="menu" ng-model="form.menu_id" required>
+          <option value="" class="">Selecione o cardápio</option>
+        </select>
+      </div>
+
+      <div ng-class="{'form-group  col-md-6 has-error' : isinvalidField(productForm,'price'), 'form-group col-md-6' : !isinvalidField(productForm,'price') }">
+        <label class="control-label">Preço</label>
+        <input money type="text" ng-model="form.price" name="price" class="form-control" placeholder="Preço do produto" required>
+      </div>
+
+      <div ng-class="{'form-group col-md-6 has-error' : isinvalidField(productForm,'approximate_time_of_preparation'), 'form-group col-md-6' : !isinvalidField(productForm,'approximate_time_of_preparation') }">
+        <label class="control-label">Tempo Aproximado de preparo</label>
+        <div class="input-group">
+          <input time type="number" ng-model="form.approximate_time_of_preparation" name="approximate_time_of_preparation" class="form-control" placeholder="Tempo aproximado de preparo do produto. Ex: 45 min" required>
+          <span class="input-group-addon">Min</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <hr>
+        <label class="control-label">
+          É Personalizável ?
+          <br>
+          <small style="color:#999">(Permite o cliente personalizar o produto no momento do pedido.)</small>
+        </label>
+        <br>
+        <input type="checkbox" name="personalizable" ng-model="form.personalizable" value="">
+      </div>
+      
+      <div ng-class="{'form-group has-error' : (isinvalidField(productForm,'ingredient') && isinvalidField(productForm,'price_ingredient')), 'form-group' : !(isinvalidField(productForm,'ingredient') && isinvalidField(productForm,'price_ingredient')) }">
+        <hr>
+        <label class="control-label">Ingredientes</label>
+        <div ng-class="{'form-group has-error' : ingredientsFieldInvalid || (!form.ingredients && productForm.$submitted) , 'form-group' : form.ingredients.length > 0 }">
+
+         <div class="col-md-4">
+          <label class="control-label">Ingrediente</label>
+          <input type="text" ng-model="ingredient.name" name="ingredient" class="form-control" placeholder="Ingrediente" >
+        </div>
+        
+        <div class="col-md-3">
+          <label class="control-label">Preço Adicional</label>
+          <input money type="text" ng-model="ingredient.price" name="price_ingredient" class="form-control" placeholder="Preço adicional"  >
+        </div>
+        
+        <div class="col-md-3">
+          <button type="button" style="margin-top:24px;" ng-click="addIngredient(ingredient)" class="btn btn-default">Adicionar</button>
+        </div>
+        <br>
+        <div class="clearfix"></div>
+        <label class="control-label" ng-if="(!form.ingredients && productForm.$submitted) || form.ingredients.length === 0 && productForm.$submitted">
+          <br>Adicione pelo menos um ingrediente ao produto</label>          
+          <hr>
+        </div>
+
+        <table class="table table-condensed table-stripe table-bordered">
+          <thead>
+            <tr>
+              <td></td>
+              <td>Ingrediente</td>
+              <td>Valor Adicional</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-if="!form.ingredients || form.ingredients.length === 0">
+              <td colspan="2">Nenhum ingrediente adicionado.</td>
+            </tr>
+            <tr ng-if="form.ingredients.length > 0" ng-repeat="ingredient in form.ingredients">
+                          <td>
+              É ingrediente Padrão ?
+              <br>
+              <input type="checkbox" name="personalizable" ng-model="ingredient.is_default" value="false">
+              </td>
+              <td>
+                <div ng-bind="ingredient.name" ng-hide="isEditing($index)"></div>
+                <input type="text" class="form-control" ng-model="ingredient.name" ng-show="editing.isEditing && editing.index == $index">
+              </td>
+              <td>
+                <div ng-bind="ingredient.price"  ng-hide="isEditing($index)"></div>
+                <input money type="text" class="form-control" ng-model="ingredient.price" ng-show="editing.isEditing && editing.index == $index">
+              </td>
+              <td>
+                <button type="button" class="btn btn-default" ng-click="form.ingredients.splice($index,1)">Remover</button>
+                <button type="button" ng-click="editIngredient($index)" class="btn btn-default">
+                  {{isEditing($index) ? 'Salvar' : 'Editar'}}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+      </div>
+
+      <div ng-class="{'form-group col-md-5 has-error' : isinvalidField(productForm,'upload'), 'form-group col-md-5' : !isinvalidField(productForm,'upload') }">
+        <label class="control-label">Foto</label>
+        <div>
+          <upload success="form.photo" />
+        </div>
+      </div>    
+
+    </div><!-- /.box-body -->
+    <div class="box-footer">
+      <a href="#/produtos" class="btn btn-danger btn-sm">Cancelar</a>
+      <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
+    </div>
+  </form>
+</div><!-- /.box -->
